@@ -25,7 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('credentials', \App\Http\Controllers\CredentialController::class);
     });
 
-    Route::middleware('role:super_admin,dme_head,ha_head')->group(function () {
+    Route::middleware('role:super_admin,dme_head,ha_head,creatives_head')->group(function () {
         Route::resource('employees', EmployeeController::class)->except(['show']);
     });
     

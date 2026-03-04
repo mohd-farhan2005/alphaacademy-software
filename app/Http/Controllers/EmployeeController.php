@@ -19,7 +19,7 @@ class EmployeeController extends Controller
         $user = $request->user();
         $query = User::whereNot('role', RoleType::SUPER_ADMIN->value)->with('department');
 
-        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD])) {
+        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD])) {
             $query->where('department_id', $user->department_id);
         }
 
@@ -40,7 +40,7 @@ class EmployeeController extends Controller
         $departments = Department::all();
         $roles = [RoleType::EMPLOYEE->value];
         if ($request->user()->role === RoleType::SUPER_ADMIN) {
-            $roles = [RoleType::DME_HEAD->value, RoleType::HA_HEAD->value, RoleType::EMPLOYEE->value];
+            $roles = [RoleType::DME_HEAD->value, RoleType::HA_HEAD->value, RoleType::CREATIVES_HEAD->value, RoleType::EMPLOYEE->value];
         }
         return view('employees.create', compact('departments', 'roles'));
     }
@@ -55,7 +55,7 @@ class EmployeeController extends Controller
         ];
 
         if ($authUser->role === RoleType::SUPER_ADMIN) {
-            $rules['role'] = ['required', 'string', 'in:' . implode(',', [RoleType::DME_HEAD->value, RoleType::HA_HEAD->value, RoleType::EMPLOYEE->value])];
+            $rules['role'] = ['required', 'string', 'in:' . implode(',', [RoleType::DME_HEAD->value, RoleType::HA_HEAD->value, RoleType::CREATIVES_HEAD->value, RoleType::EMPLOYEE->value])];
             $rules['department_id'] = ['required', 'exists:departments,id'];
         }
 
@@ -115,7 +115,7 @@ class EmployeeController extends Controller
         $departments = Department::all();
         $roles = [RoleType::EMPLOYEE->value];
         if (request()->user()->role === RoleType::SUPER_ADMIN) {
-            $roles = [RoleType::DME_HEAD->value, RoleType::HA_HEAD->value, RoleType::EMPLOYEE->value];
+            $roles = [RoleType::DME_HEAD->value, RoleType::HA_HEAD->value, RoleType::CREATIVES_HEAD->value, RoleType::EMPLOYEE->value];
         }
         return view('employees.edit', compact('employee', 'departments', 'roles'));
     }
@@ -135,7 +135,7 @@ class EmployeeController extends Controller
         }
 
         if ($authUser->role === RoleType::SUPER_ADMIN) {
-            $rules['role'] = ['required', 'string', 'in:' . implode(',', [RoleType::DME_HEAD->value, RoleType::HA_HEAD->value, RoleType::EMPLOYEE->value])];
+            $rules['role'] = ['required', 'string', 'in:' . implode(',', [RoleType::DME_HEAD->value, RoleType::HA_HEAD->value, RoleType::CREATIVES_HEAD->value, RoleType::EMPLOYEE->value])];
             $rules['department_id'] = ['required', 'exists:departments,id'];
         }
 

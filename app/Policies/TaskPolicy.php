@@ -18,7 +18,7 @@ class TaskPolicy
 
     public function view(User $user, Task $task): bool
     {
-        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD])) {
+        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD])) {
             return $user->department_id === $task->assignee->department_id;
         }
         return $user->id === $task->assigned_to || $user->id === $task->assigned_by;
@@ -26,7 +26,7 @@ class TaskPolicy
 
     public function update(User $user, Task $task): bool
     {
-        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD])) {
+        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD])) {
             return $user->department_id === $task->assignee->department_id;
         }
         return $user->id === $task->assigned_to || $user->id === $task->assigned_by;
@@ -34,7 +34,7 @@ class TaskPolicy
 
     public function delete(User $user, Task $task): bool
     {
-        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD])) {
+        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD])) {
             return $user->department_id === $task->assignee->department_id;
         }
         return $user->id === $task->assigned_to || $user->id === $task->assigned_by;

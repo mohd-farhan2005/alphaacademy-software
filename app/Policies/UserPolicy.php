@@ -17,12 +17,12 @@ class UserPolicy
 
     public function viewAny(User $user): bool
     {
-        return in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD]);
+        return in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD]);
     }
 
     public function view(User $user, User $model): bool
     {
-        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD])) {
+        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD])) {
             return $user->department_id === $model->department_id;
         }
         return $user->id === $model->id;
@@ -30,12 +30,12 @@ class UserPolicy
 
     public function create(User $user): bool
     {
-        return in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD]);
+        return in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD]);
     }
 
     public function update(User $user, User $model): bool
     {
-        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD])) {
+        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD])) {
             // Heads can only update employees not other heads
             return $user->department_id === $model->department_id && $model->role === RoleType::EMPLOYEE;
         }
@@ -44,7 +44,7 @@ class UserPolicy
 
     public function delete(User $user, User $model): bool
     {
-        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD])) {
+        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD])) {
             return $user->department_id === $model->department_id && $model->role === RoleType::EMPLOYEE;
         }
         return false;

@@ -68,7 +68,7 @@ class DashboardController extends Controller
             $data['monthly_month_names'] = $monthNames;
             $data['monthly_datasets']    = $monthlyDatasets;
             $data['chart_year']          = $currentYear;
-        } elseif (in_array($role, [RoleType::DME_HEAD, RoleType::HA_HEAD])) {
+        } elseif (in_array($role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD])) {
             $deptId = $user->department_id;
             $data['employees_count'] = User::where('department_id', $deptId)->count();
             $deptUserIds = User::where('department_id', $deptId)->pluck('id');
@@ -121,7 +121,7 @@ class DashboardController extends Controller
         $recentTasksQuery = Task::with(['assigner', 'assignee']);
         if ($role === RoleType::SUPER_ADMIN) {
             // Unrestricted for super admins
-        } elseif (in_array($role, [RoleType::DME_HEAD, RoleType::HA_HEAD])) {
+        } elseif (in_array($role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD])) {
             $recentTasksQuery->whereIn('assigned_to', $deptUserIds ?? User::where('department_id', $user->department_id)->pluck('id'));
         } else {
             $recentTasksQuery->where('assigned_to', $user->id);

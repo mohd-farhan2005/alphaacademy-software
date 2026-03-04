@@ -28,7 +28,7 @@
                     </x-nav-link>
                     @endif
 
-                    @if(in_array(Auth::user()->role, [\App\Enums\RoleType::SUPER_ADMIN, \App\Enums\RoleType::DME_HEAD, \App\Enums\RoleType::HA_HEAD]))
+                    @if(in_array(Auth::user()->role, [\App\Enums\RoleType::SUPER_ADMIN, \App\Enums\RoleType::DME_HEAD, \App\Enums\RoleType::HA_HEAD, \App\Enums\RoleType::CREATIVES_HEAD]))
                     <x-nav-link :href="route('employees.index')" :active="request()->routeIs('employees.*') && !request()->routeIs('employees.show')">
                         {{ __('Employees') }}
                     </x-nav-link>
@@ -113,7 +113,7 @@
             </x-responsive-nav-link>
             @endif
 
-            @if(in_array(Auth::user()->role, [\App\Enums\RoleType::SUPER_ADMIN, \App\Enums\RoleType::DME_HEAD, \App\Enums\RoleType::HA_HEAD]))
+            @if(in_array(Auth::user()->role, [\App\Enums\RoleType::SUPER_ADMIN, \App\Enums\RoleType::DME_HEAD, \App\Enums\RoleType::HA_HEAD, \App\Enums\RoleType::CREATIVES_HEAD]))
             <x-responsive-nav-link :href="route('employees.index')" :active="request()->routeIs('employees.*') && !request()->routeIs('employees.show')">
                 {{ __('Employees') }}
             </x-responsive-nav-link>

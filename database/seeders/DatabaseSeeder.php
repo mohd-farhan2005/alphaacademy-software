@@ -44,6 +44,18 @@ class DatabaseSeeder extends Seeder
             'department_id' => $ha->id,
         ]);
 
+        // Create Creatives Department
+        $creatives = Department::create(['name' => 'Creatives']);
+
+        // Create Creatives Head
+        User::create([
+            'name' => 'Creatives Head',
+            'email' => 'creativeshead@alphaacademy.com',
+            'password' => Hash::make('password'),
+            'role' => RoleType::CREATIVES_HEAD->value,
+            'department_id' => $creatives->id,
+        ]);
+
         // Create Employees
         User::create([
             'name' => 'DME Employee',
