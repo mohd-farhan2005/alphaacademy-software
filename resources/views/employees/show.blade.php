@@ -7,23 +7,23 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            
+
             <!-- Filter Navigation -->
             <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex justify-center sm:justify-end gap-2">
-                <a href="{{ route('employees.show', ['employee' => $employee, 'period' => 'this_month']) }}" 
+                <a href="{{ route('employees.show', ['employee' => $employee, 'period' => 'this_month']) }}"
                    class="px-4 py-2 text-sm font-medium rounded-md transition-colors {{ $period === 'this_month' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
                     This Month
                 </a>
-                <a href="{{ route('employees.show', ['employee' => $employee, 'period' => 'last_month']) }}" 
+                <a href="{{ route('employees.show', ['employee' => $employee, 'period' => 'last_month']) }}"
                    class="px-4 py-2 text-sm font-medium rounded-md transition-colors {{ $period === 'last_month' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
                     Last Month
                 </a>
-                <a href="{{ route('employees.show', ['employee' => $employee, 'period' => 'all_time']) }}" 
+                <a href="{{ route('employees.show', ['employee' => $employee, 'period' => 'all_time']) }}"
                    class="px-4 py-2 text-sm font-medium rounded-md transition-colors {{ $period === 'all_time' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
                     All Time
                 </a>
             </div>
-            
+
             <!-- Employee Details -->
             <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 flex flex-wrap gap-6 justify-between items-center">
                 <div>
@@ -48,7 +48,7 @@
 
             <!-- Stats & Graph -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
+
                 <!-- Stat Cards -->
                 <div class="md:col-span-1 space-y-6">
                     <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-yellow-400">
@@ -66,7 +66,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-blue-500">
                          <div class="flex items-center">
                             <div class="flex-shrink-0 bg-blue-100 rounded-md p-3">
@@ -188,8 +188,8 @@
                     labels: ['Pending', 'In Progress', 'Completed'],
                     datasets: [{
                         data: [
-                            {{ $taskCounts['pending'] }}, 
-                            {{ $taskCounts['in_progress'] }}, 
+                            {{ $taskCounts['pending'] }},
+                            {{ $taskCounts['in_progress'] }},
                             {{ $taskCounts['completed'] }}
                         ],
                         backgroundColor: [
@@ -214,3 +214,4 @@
     </script>
     @endif
 </x-app-layout>
+
