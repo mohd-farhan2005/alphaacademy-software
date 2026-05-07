@@ -40,10 +40,7 @@ class CalendarController extends Controller
      */
     public function store(Request $request)
     {
-        // Check authorization (SUPER_ADMIN, DME_HEAD, HA_HEAD)
-        if (!in_array(Auth::user()->role, [RoleType::SUPER_ADMIN, RoleType::DME_HEAD, RoleType::HA_HEAD])) {
-            abort(403, 'Unauthorized action.');
-        }
+
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -67,10 +64,7 @@ class CalendarController extends Controller
      */
     public function destroy(CalendarEvent $calendar)
     {
-        // Check authorization (SUPER_ADMIN, DME_HEAD, HA_HEAD)
-        if (!in_array(Auth::user()->role, [RoleType::SUPER_ADMIN, RoleType::DME_HEAD, RoleType::HA_HEAD])) {
-            abort(403, 'Unauthorized action.');
-        }
+
 
         $month = $calendar->date->month;
         $year = $calendar->date->year;

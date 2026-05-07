@@ -17,6 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware('role:super_admin')->group(function () {
         Route::resource('departments', DepartmentController::class);
+        Route::resource('invoices', \App\Http\Controllers\InvoiceController::class);
     });
 
     Route::middleware('role:super_admin,ha_head')->group(function () {

@@ -15,6 +15,7 @@
                         <div class="flex items-center gap-2">
                             <form action="{{ route('tasks.index') }}" method="GET" class="flex flex-col sm:flex-row gap-2">
                                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Search title..." class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+                                <input type="date" name="date" value="{{ request('date') }}" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm" title="Filter by date">
                                 <select name="status" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm">
                                     <option value="">All Statuses</option>
                                     <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
@@ -22,7 +23,7 @@
                                     <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Completed</option>
                                 </select>
                                 <button type="submit" class="px-3 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition text-sm">Filter</button>
-                                @if(request()->filled('search') || request()->filled('status'))
+                                @if(request()->filled('search') || request()->filled('status') || request()->filled('date'))
                                     <a href="{{ route('tasks.index') }}" class="px-3 py-2 text-sm text-gray-500 hover:text-gray-700 transition">Clear</a>
                                 @endif
                             </form>

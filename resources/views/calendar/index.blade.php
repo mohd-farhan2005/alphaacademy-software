@@ -28,11 +28,7 @@
                             $current->addDay();
                         }
                         
-                        $canEdit = in_array(Auth::user()->role, [
-                            \App\Enums\RoleType::SUPER_ADMIN, 
-                            \App\Enums\RoleType::DME_HEAD, 
-                            \App\Enums\RoleType::HA_HEAD
-                        ]);
+                        $canEdit = true;
                     @endphp
 
                     <!-- Calendar Header Controls -->

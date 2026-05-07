@@ -20,6 +20,9 @@
                     <x-nav-link :href="route('departments.index')" :active="request()->routeIs('departments.*')">
                         {{ __('Departments') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('invoices.index')" :active="request()->routeIs('invoices.*')">
+                        {{ __('Invoices') }}
+                    </x-nav-link>
                     @endif
 
                     @if(in_array(Auth::user()->role, [\App\Enums\RoleType::SUPER_ADMIN, \App\Enums\RoleType::HA_HEAD]))
@@ -104,6 +107,9 @@
             @if(Auth::user()->role === \App\Enums\RoleType::SUPER_ADMIN)
             <x-responsive-nav-link :href="route('departments.index')" :active="request()->routeIs('departments.*')">
                 {{ __('Departments') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('invoices.index')" :active="request()->routeIs('invoices.*')">
+                {{ __('Invoices') }}
             </x-responsive-nav-link>
             @endif
 

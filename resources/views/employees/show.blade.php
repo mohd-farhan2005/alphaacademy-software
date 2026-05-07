@@ -116,11 +116,20 @@
             <!-- Recent Tasks Table -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-gray-100 mt-6">
                 <div class="p-6">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
-                        <h3 class="text-lg font-medium text-gray-900">Recent Assigned Tasks</h3>
-                        <a href="{{ route('tasks.create') }}?assigned_to={{ $employee->id }}" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition text-sm font-medium whitespace-nowrap">
-                            Add New Task
-                        </a>
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-4 gap-4">
+                        <h3 class="text-lg font-medium text-gray-900">Assigned Tasks</h3>
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full lg:w-auto">
+                            <form action="{{ route('employees.show', $employee) }}" method="GET" class="flex items-center gap-2">
+                                <input type="date" name="date" value="{{ request('date') }}" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm" title="Filter by date">
+                                <button type="submit" class="px-3 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition text-sm">Filter</button>
+                                @if(request()->filled('date'))
+                                    <a href="{{ route('employees.show', $employee) }}" class="px-3 py-2 text-sm text-gray-500 hover:text-gray-700 transition">Clear</a>
+                                @endif
+                            </form>
+                            <a href="{{ route('tasks.create') }}?assigned_to={{ $employee->id }}" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition text-sm font-medium whitespace-nowrap">
+                                Add New Task
+                            </a>
+                        </div>
                     </div>
                     @if($recentTasks->count() > 0)
                     <div class="overflow-x-auto">
@@ -155,9 +164,12 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="mt-4">
+                        {{ $recentTasks->links() }}
+                    </div>
                     @else
                     <div class="text-center py-6 text-gray-500">
-                        <p>No recent tasks found.</p>
+                        <p>No tasks found.</p>
                     </div>
                     @endif
                 </div>

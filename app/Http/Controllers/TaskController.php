@@ -15,7 +15,7 @@ class TaskController extends Controller
         $user = $request->user();
         $query = Task::with(['assigner', 'assignee', 'responsiblePerson']);
 
-        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD])) {
+        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD])) {
             $deptUserIds = User::where('department_id', $user->department_id)->pluck('id');
             $query->whereIn('assigned_to', $deptUserIds);
         } elseif ($user->role === RoleType::EMPLOYEE) {
@@ -34,6 +34,10 @@ class TaskController extends Controller
             $query->where('status', $request->status);
         }
 
+        if ($request->filled('date')) {
+            $query->whereDate('created_at', $request->date);
+        }
+
         $tasks = $query->latest()->paginate(10)->withQueryString();
         return view('tasks.index', compact('tasks'));
     }
@@ -43,7 +47,7 @@ class TaskController extends Controller
         $user = $request->user();
         $employeesQuery = User::whereNot('role', RoleType::SUPER_ADMIN->value);
         
-        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD])) {
+        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD])) {
             $employeesQuery->where('department_id', $user->department_id);
         } elseif ($user->role === RoleType::EMPLOYEE) {
             $employeesQuery->where('id', $user->id);
@@ -77,7 +81,7 @@ class TaskController extends Controller
         $user = request()->user();
         
         $employeesQuery = User::whereNot('role', RoleType::SUPER_ADMIN->value);
-        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD])) {
+        if (in_array($user->role, [RoleType::DME_HEAD, RoleType::HA_HEAD, RoleType::CREATIVES_HEAD])) {
             $employeesQuery->where('department_id', $user->department_id);
         } elseif ($user->role === RoleType::EMPLOYEE) {
             $employeesQuery->where('id', $user->id);

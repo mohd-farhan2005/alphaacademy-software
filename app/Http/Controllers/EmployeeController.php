@@ -87,12 +87,21 @@ class EmployeeController extends Controller
         $period = $request->input('period', 'this_month');
         $query = Task::where('assigned_to', $employee->id);
 
-        if ($period === 'this_month') {
-            $query->whereMonth('created_at', Carbon::now()->month)
-                  ->whereYear('created_at', Carbon::now()->year);
-        } elseif ($period === 'last_month') {
-            $query->whereMonth('created_at', Carbon::now()->subMonth()->month)
-                  ->whereYear('created_at', Carbon::now()->subMonth()->year);
+        if ($request->filled('date')) {
+            $query->whereDate('created_at', $request->date);
+            try {
+                $period = \Carbon\Carbon::parse($request->date)->format('M d, Y');
+            } catch (\Exception $e) {
+                $period = $request->date;
+            }
+        } else {
+            if ($period === 'this_month') {
+                $query->whereMonth('created_at', Carbon::now()->month)
+                      ->whereYear('created_at', Carbon::now()->year);
+            } elseif ($period === 'last_month') {
+                $query->whereMonth('created_at', Carbon::now()->subMonth()->month)
+                      ->whereYear('created_at', Carbon::now()->subMonth()->year);
+            }
         }
 
         $taskCounts = [
@@ -103,8 +112,8 @@ class EmployeeController extends Controller
 
         $recentTasks = (clone $query)
             ->latest()
-            ->take(5)
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         return view('employees.show', compact('employee', 'taskCounts', 'recentTasks', 'period'));
     }
