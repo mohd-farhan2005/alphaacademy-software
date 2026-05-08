@@ -48,6 +48,24 @@
                     <x-nav-link :href="route('calendar.index')" :active="request()->routeIs('calendar.*')">
                         {{ __('Calendar') }}
                     </x-nav-link>
+
+                    @if(Auth::user()->role === \App\Enums\RoleType::SUPER_ADMIN || Auth::user()->role === \App\Enums\RoleType::HA_HEAD || (Auth::user()->department && str_contains(strtolower(Auth::user()->department->name), 'ha')))
+                    <x-nav-link :href="route('ha-syllabus.index')" :active="request()->routeIs('ha-syllabus.index')">
+                        {{ __('HA Syllabus') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('ha-syllabus.progress')" :active="request()->routeIs('ha-syllabus.progress')">
+                        {{ __('HA Progress List') }}
+                    </x-nav-link>
+                    @endif
+
+                    @if(Auth::user()->role === \App\Enums\RoleType::SUPER_ADMIN || Auth::user()->role === \App\Enums\RoleType::DME_HEAD || (Auth::user()->department && str_contains(strtolower(Auth::user()->department->name), 'dme')))
+                    <x-nav-link :href="route('dme-syllabus.index')" :active="request()->routeIs('dme-syllabus.index')">
+                        {{ __('DME Syllabus') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('dme-syllabus.progress')" :active="request()->routeIs('dme-syllabus.progress')">
+                        {{ __('DME Progress List') }}
+                    </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -136,6 +154,24 @@
             <x-responsive-nav-link :href="route('calendar.index')" :active="request()->routeIs('calendar.*')">
                 {{ __('Calendar') }}
             </x-responsive-nav-link>
+
+            @if(Auth::user()->role === \App\Enums\RoleType::SUPER_ADMIN || Auth::user()->role === \App\Enums\RoleType::HA_HEAD || (Auth::user()->department && str_contains(strtolower(Auth::user()->department->name), 'ha')))
+            <x-responsive-nav-link :href="route('ha-syllabus.index')" :active="request()->routeIs('ha-syllabus.index')">
+                {{ __('HA Syllabus') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('ha-syllabus.progress')" :active="request()->routeIs('ha-syllabus.progress')">
+                {{ __('HA Progress List') }}
+            </x-responsive-nav-link>
+            @endif
+
+            @if(Auth::user()->role === \App\Enums\RoleType::SUPER_ADMIN || Auth::user()->role === \App\Enums\RoleType::DME_HEAD || (Auth::user()->department && str_contains(strtolower(Auth::user()->department->name), 'dme')))
+            <x-responsive-nav-link :href="route('dme-syllabus.index')" :active="request()->routeIs('dme-syllabus.index')">
+                {{ __('DME Syllabus') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('dme-syllabus.progress')" :active="request()->routeIs('dme-syllabus.progress')">
+                {{ __('DME Progress List') }}
+            </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
